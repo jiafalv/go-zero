@@ -26,6 +26,9 @@ func (s String) IsEmptyOrSpace() bool {
 	if len(s.source) == 0 {
 		return true
 	}
+	// note: 标准库stings，去掉空格
+	// https://pkg.go.dev/strings@go1.23.4#TrimSpace
+	// 同类型的函数：Trim, TrimFunc, TrimLeft, TrimLeftFunc, TrimPrefix, TrimRight, TrimRightFunc, TrimSuffix
 	if strings.TrimSpace(s.source) == "" {
 		return true
 	}
@@ -34,6 +37,9 @@ func (s String) IsEmptyOrSpace() bool {
 
 // Lower calls the strings.ToLower
 func (s String) Lower() string {
+	// note: 标准库stings，将字符转成小写
+	// https://pkg.go.dev/strings@go1.23.4#ToLower
+	// 同类型函数：ToLowerSpecial, ToTitle, ToTitleSpecial, ToUpper, ToUpperSpecial, ToValidUTF8
 	return strings.ToLower(s.source)
 }
 
@@ -44,6 +50,9 @@ func (s String) Upper() string {
 
 // ReplaceAll calls the strings.ReplaceAll
 func (s String) ReplaceAll(old, new string) string {
+	// note：标准库strings，替换字符
+	// https://pkg.go.dev/strings@go1.23.4#Replace
+	// 同类型函数：Repeat，ReplaceAll
 	return strings.Replace(s.source, old, new, -1)
 }
 
@@ -77,6 +86,7 @@ func (s String) ToSnake() string {
 	list := s.splitBy(unicode.IsUpper, false)
 	var target []string
 	for _, item := range list {
+		// note：内置函数append，builtin.go文件中包含内置的类型、函数、接口
 		target = append(target, From(item).Lower())
 	}
 	return strings.Join(target, "_")
